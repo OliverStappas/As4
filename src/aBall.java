@@ -3,13 +3,86 @@ import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import java.awt.*;
 
-public class aBall extends GraphicsProgram {
+public class aBall extends Thread {
+    /**
+     * The constructor specifies the parameters for simulation. They are
+     *
+     * @param Xi double The initial X position of the center of the ball
+     * @param Yi double The initial Y position of the center of the ball
+     * @param Vo double The initial velocity of the ball at launch
+     * @param theta double Launch angle (with the horizontal plane)
+     * @param bSize double The radius of the ball in simulation units
+     * @param bColor Color The initial color of the ball
+     * @param bLoss double Fraction [0,1] of the energy lost on each bounce
+     */
 
     public aBall (double Xi, double Yi, double Vo, double theta,
                   double bSize, Color bColor, double bLoss) {
 
+        this.Xi = Xi; // Get simulation parameters
+        this.Yi = Yi;
+        this.Vo = Vo;
+        this.theta = theta;
+        this.bSize = bSize;
+        this.bColor = bColor;
+        this.bLoss = bLoss;
+
+    }
+    public GOval getBall() {
+        return myBall;
+    }
+
+    /**
+     * The run method implements the simulation loop from Assignment 1.
+     * Once the start method is called on the aBall instance, the
+     * code in the run method is executed concurrently with the main
+     * program.
+     * @param void
+     * @return void
+     */
+
+    public void run() {
+// Simulation goes here...
+
+        boolean running = true;
+
+        // Simulation loop
+        while (running) {
+            // Update parameters
+            double X = Vox * Vt / g * (1 - Math.exp(-g * time / Vt)) + Xo; // X position
+            double Y = bSize + Vt / g * (Voy + Vt) * (1 - Math.exp(-g * time / Vt)) - Vt * time; // Y position
+            double Vx = (X - Xlast) / TICK; // Estimate Vx from difference
+            double Vy = (Y - Ylast) / TICK; // Estimate Vy from difference
+
+            // Detecting collision with ground
+            if (Vy < 0 && Y <= bSize) {
+                double KEx = 0.5 * Vx * Vx * (1 - loss); // Kinetic energy in X direction after collision
+                double KEy = 0.5 * Vy * Vy * (1 - loss); // Kinetic energy in y direction after collision
+                Vox = Math.sqrt(2 * KEx); // Resulting horizontal velocity
+                Voy = Math.sqrt(2 * KEy); // Resulting vertical velocity
+
+                // Reset variables
+                Xo = X;
+                time = 0;
+                Y = bSize;
+
+                // running = false;  // TEST FOR A1.pdf TO STOP LOOP AFTER ONE FLOOR COLLISION
+
+                // When to stop program (If either Vx or Vy < ETHR)
+                if ((KEx <= ETHR) || (KEy <= ETHR)) {
+                    running = false;
+                }
+            }
+
+            try { // pause for 50 milliseconds
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
+
 
 
 public class Bounce extends GraphicsProgram {
