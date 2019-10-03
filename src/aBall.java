@@ -3,7 +3,7 @@ import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import java.awt.*;
 
-public class aBall extends Thread {
+public class aBall extends Thread  {
 
     private static final int WIDTH = 1200; // n.b. screen coordinates
     private static final int HEIGHT = 600;
@@ -13,6 +13,7 @@ public class aBall extends Thread {
     private static final double Pi = 3.141592654;      // To convert degrees to radians
     private static final double k = 0.0016;            // Air resistance parameter
     private static final double ETHR = 0.01;           // If either Vx or Vy < ETHR STOP
+    private static final double PD = 1;                // Trace point diameter
     double TICK = 0.1;
     double Xi = 0;
     double Yi = 0;
@@ -74,7 +75,10 @@ public class aBall extends Thread {
         double Xlast = 0; // Previous X position
         double Ylast = 0; // Previous Y position
         double time = 0;
-        double Xo = this.Xi; // Offset X
+        double Xo = this.Xi; // Offset
+        double KExLast = Double.POSITIVE_INFINITY;
+        double KEyLast = Double.POSITIVE_INFINITY;
+        double yOffset = this.Yi - this.bSize;
 
         boolean running = true;
 
@@ -82,7 +86,7 @@ public class aBall extends Thread {
         while (running) {
             // Update parameters
             double X = Vox * Vt / g * (1 - Math.exp(-g * time / Vt)) + Xo; // X position
-            double Y = Vt / g * (Voy + Vt) * (1 - Math.exp(-g * time / Vt)) - Vt * time + this.Yi; // Y position
+            double Y = Vt / g * (Voy + Vt) * (1 - Math.exp(-g * time / Vt)) - Vt * time + yOffset; // Y position
             double Vx = (X - Xlast) / TICK; // Estimate Vx from difference
             double Vy = (Y - Ylast) / TICK; // Estimate Vy from difference
 
@@ -97,12 +101,17 @@ public class aBall extends Thread {
                 Xo = X;
                 time = 0;
                 Y = this.bSize;
+                yOffset = bSize;
 
                 // running = false;  // TEST FOR A1.pdf TO STOP LOOP AFTER ONE FLOOR COLLISION
 
                 // When to stop program (If either Vx or Vy < ETHR)
-                if ((KEx <= ETHR) || (KEy <= ETHR)) {
+                if ((KEx + KEy <= ETHR) || ((KEy + KEx) >= (KExLast + KEyLast))) {
                     running = false;
+
+                KExLast = KEx;
+                KEyLast = KEy;
+
                 }
             }
 
@@ -116,6 +125,9 @@ public class aBall extends Thread {
 
             // Moving red ball and drawing trace points
             myBall.setLocation(ScrX, ScrY);  // Moving the red ball to the desired screen coordinates
+            //GOval tracePoint = new GOval(X * SCALE, HEIGHT - Y * SCALE, PD, PD); // Initializing the tracepoints
+            //tracePoint.setFilled(true);
+            //add(tracePoint); // Drawing the tracepoints on the screen
 
             // Time Update
             time += TICK;
