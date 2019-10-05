@@ -94,8 +94,13 @@ public class aBall extends Thread  {
             if (Vy < 0 && Y <= this.bSize) {
                 double KEx = 0.5 * Vx * Vx * (1 - this.bLoss); // Kinetic energy in X direction after collision
                 double KEy = 0.5 * Vy * Vy * (1 - this.bLoss); // Kinetic energy in y direction after collision
+
                 Vox = Math.sqrt(2 * KEx); // Resulting horizontal velocity
                 Voy = Math.sqrt(2 * KEy); // Resulting vertical velocity
+
+                if (theta > 90) {
+                    Vox = -Vox;
+                }
 
                 // Reset variables
                 Xo = X;
@@ -103,16 +108,14 @@ public class aBall extends Thread  {
                 Y = this.bSize;
                 yOffset = bSize;
 
-                // running = false;  // TEST FOR A1.pdf TO STOP LOOP AFTER ONE FLOOR COLLISION
-
                 // When to stop program (If either Vx or Vy < ETHR)
                 if ((KEx + KEy <= ETHR) || ((KEy + KEx) >= (KExLast + KEyLast))) {
                     running = false;
+                }
 
                 KExLast = KEx;
                 KEyLast = KEy;
 
-                }
             }
 
             // Display update (Screen coordinates)

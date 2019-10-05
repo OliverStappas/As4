@@ -2,7 +2,6 @@ import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
-
 import java.awt.*;
 
 public class bSim extends GraphicsProgram {
@@ -20,7 +19,8 @@ public class bSim extends GraphicsProgram {
     private static final double VoMAX = 50.0; // Maximum velocity (meters/sec)
     private static final double ThetaMIN = 80.0; // Minimum launch angle (degrees)
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees)
-    private static RandomGenerator rgen = new RandomGenerator();
+    //private static RandomGenerator rgen = new RandomGenerator();
+    private RandomGenerator rgen = RandomGenerator.getInstance();
 
 
     public void run() {
@@ -35,21 +35,25 @@ public class bSim extends GraphicsProgram {
         // Set seed
         rgen.setSeed((long) 0.12345);
 
-        for (int i = 1; i < NUMBALLS; i++) {
-
+        for (int i = 1; i <= 100; i++) {
             double Vo = rgen.nextDouble(VoMIN, VoMAX);
             double theta = rgen.nextDouble(ThetaMIN, ThetaMAX);
             double bSize = rgen.nextDouble(MINSIZE, MAXSIZE);
-            Color bColor = rgen.nextDouble(EMIN, EMAX);
+            Color bColor = rgen.nextColor();
             double bLoss = rgen.nextDouble(EMIN, EMAX);
+            aBall ball = new aBall((WIDTH/2)/SCALE,bSize*2,Vo,theta,bSize,bColor,bLoss);
+            add(ball.getBall());
+            ball.start();
+            println("Ball "+ i + " Vo: " + Vo + " theta: " + theta + " bSize: " + bSize + " bColor: " + bColor
+                    + " bLoss: " + bLoss);
 
         }
 
         // Test for one ball
         //aBall redBall = new aBall(10.0,100.0,1.0,30.0,6.0,Color.RED,0.25);
-        aBall redBall = new aBall(5,1,40,85,1,Color.RED,0.4);
-        add(redBall.getBall());
-        redBall.start();
+        //aBall redBall = new aBall(5,1,40,85,1,Color.RED,0.4);
+        //add(redBall.getBall());
+        //redBall.start();
 
         // For example, to generate a random loss parameter, one would use an
         // instance of the RandomGenerator class as follows:
