@@ -19,16 +19,16 @@ public class bSim extends GraphicsProgram {
     private static final double VoMAX = 50.0; // Maximum velocity (meters/sec)
     private static final double ThetaMIN = 80.0; // Minimum launch angle (degrees)
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees)
-    //private static RandomGenerator rgen = new RandomGenerator();
-    private RandomGenerator rgen = RandomGenerator.getInstance();
+        //private static RandomGenerator rgen = new RandomGenerator();
+        private RandomGenerator rgen = RandomGenerator.getInstance();
 
 
-    public void run() {
+        public void run() {
 // Set up display, create and start multiple instances of
-        this.resize(WIDTH, HEIGHT + OFFSET); // size display window
+            this.resize(WIDTH, HEIGHT + OFFSET); // size display window
 
-        // Ground plane
-        GRect rect = new GRect(0, HEIGHT, 1200, 3);
+            // Ground plane
+            GRect rect = new GRect(0, HEIGHT, 1200, 3);
         rect.setFilled(true);
         add(rect);
 
@@ -36,10 +36,10 @@ public class bSim extends GraphicsProgram {
         rgen.setSeed((long) 0.12345);
 
         for (int i = 1; i <= 100; i++) {
+            Color bColor = rgen.nextColor();
             double Vo = rgen.nextDouble(VoMIN, VoMAX);
             double theta = rgen.nextDouble(ThetaMIN, ThetaMAX);
             double bSize = rgen.nextDouble(MINSIZE, MAXSIZE);
-            Color bColor = rgen.nextColor();
             double bLoss = rgen.nextDouble(EMIN, EMAX);
             aBall ball = new aBall((WIDTH/2)/SCALE,bSize*2,Vo,theta,bSize,bColor,bLoss);
             add(ball.getBall());
