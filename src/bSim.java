@@ -1,4 +1,3 @@
-import acm.graphics.GOval;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
@@ -19,33 +18,33 @@ public class bSim extends GraphicsProgram {
     private static final double VoMAX = 50.0; // Maximum velocity (meters/sec)
     private static final double ThetaMIN = 80.0; // Minimum launch angle (degrees)
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees)
-        //private static RandomGenerator rgen = new RandomGenerator();
-        private RandomGenerator rgen = RandomGenerator.getInstance();
+    private RandomGenerator rgen = RandomGenerator.getInstance();
 
 
-        public void run() {
-// Set up display, create and start multiple instances of
-            this.resize(WIDTH, HEIGHT + OFFSET); // size display window
+    public void run() {
+        this.resize(WIDTH, HEIGHT + OFFSET); // size display window
 
-            // Ground plane
-            GRect rect = new GRect(0, HEIGHT, 1200, 3);
+        // Ground plane
+        GRect rect = new GRect(0, HEIGHT, 1200, 3);
         rect.setFilled(true);
         add(rect);
 
-        // Set seed
+        // Set seed for randomness
         rgen.setSeed((long) 0.12345);
 
+        // for loop to randomize and create 100 different balls
         for (int i = 1; i <= 100; i++) {
-            Color bColor = rgen.nextColor();
+            // Randomizing the different aBall parameters with boundaries
             double Vo = rgen.nextDouble(VoMIN, VoMAX);
             double theta = rgen.nextDouble(ThetaMIN, ThetaMAX);
             double bSize = rgen.nextDouble(MINSIZE, MAXSIZE);
+            Color bColor = rgen.nextColor();
             double bLoss = rgen.nextDouble(EMIN, EMAX);
-            aBall ball = new aBall((WIDTH/2)/SCALE,bSize*2,Vo,theta,bSize,bColor,bLoss);
+
+            // Creating the ball with the previously randomly generate paramters
+            aBall ball = new aBall((WIDTH/2)/SCALE,bSize,Vo,theta,bSize,bColor,bLoss);
             add(ball.getBall());
             ball.start();
-            println("Ball "+ i + " Vo: " + Vo + " theta: " + theta + " bSize: " + bSize + " bColor: " + bColor
-                    + " bLoss: " + bLoss);
 
         }
 
@@ -61,3 +60,5 @@ public class bSim extends GraphicsProgram {
     }
 }
 
+//            println("Ball "+ i + " Vo: " + Vo + " theta: " + theta + " bSize: " + bSize + " bColor: " + bColor
+//                    + " bLoss: " + bLoss);

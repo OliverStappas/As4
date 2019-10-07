@@ -1,6 +1,4 @@
 import acm.graphics.GOval;
-import acm.graphics.GRect;
-import acm.program.GraphicsProgram;
 import java.awt.*;
 
 public class aBall extends Thread  {
@@ -14,6 +12,7 @@ public class aBall extends Thread  {
     private static final double k = 0.0016;            // Air resistance parameter
     private static final double ETHR = 0.01;           // If either Vx or Vy < ETHR STOP
     private static final double PD = 1;                // Trace point diameter
+    // Initializing variables
     double TICK = 0.1;
     double Xi = 0;
     double Yi = 0;
@@ -43,11 +42,11 @@ public class aBall extends Thread  {
         this.Yi = Yi;
         this.Vo = Vo;
         this.theta = theta;
-        this.bSize = bSize;
+        this.bSize = bSize/2;
         this.bColor = bColor;
         this.bLoss = bLoss;
 
-        // Ball
+        // Creating a ball from constructor parameters
         double bPixelSize = this.bSize * SCALE;
         myBall = new GOval(this.Xi * SCALE, this.Yi * SCALE, bPixelSize * 2, bPixelSize * 2);
         myBall.setFilled(true);
@@ -74,13 +73,21 @@ public class aBall extends Thread  {
         double Voy = this.Vo * Math.sin(theta * Pi / 180); // Initial y velocity
         double Xlast = 0; // Previous X position
         double Ylast = 0; // Previous Y position
-        double time = 0;
+        double time = 0; // Initial time
         double Xo = this.Xi; // Offset
-        double KExLast = Double.POSITIVE_INFINITY;
+        double KExLast = Double.POSITIVE_INFINITY; // Initializing the last kinetic energy in y and x to infinity so
+                                                   // that the first calculation of kinetic energy is guaranteed to be
+                                                   // less that the last one
         double KEyLast = Double.POSITIVE_INFINITY;
-        double yOffset = this.Yi - this.bSize;
+        double yOffset = this.Yi - this.bSize; // Y offset to be added to the Y position each time
 
-        boolean running = true;
+        // Condition to check if the ball's x velocity should be pointed to the left (-x direction) after a bounce
+        double sign = 1; // If the velocity is in the positive x direction
+        if (theta > 90) {
+            sign = -1; // If the velocity is in the negative x direction
+        }
+
+        boolean running = true; // Condition for program to be running
 
         // Simulation loop
         while (running) {
@@ -95,12 +102,8 @@ public class aBall extends Thread  {
                 double KEx = 0.5 * Vx * Vx * (1 - this.bLoss); // Kinetic energy in X direction after collision
                 double KEy = 0.5 * Vy * Vy * (1 - this.bLoss); // Kinetic energy in y direction after collision
 
-                Vox = Math.sqrt(2 * KEx); // Resulting horizontal velocity
+                Vox = sign * Math.sqrt(2 * KEx); // Resulting horizontal velocity
                 Voy = Math.sqrt(2 * KEy); // Resulting vertical velocity
-
-                if (theta > 90) {
-                    Vox = -Vox;
-                }
 
                 // Reset variables
                 Xo = X;
@@ -108,11 +111,13 @@ public class aBall extends Thread  {
                 Y = this.bSize;
                 yOffset = bSize;
 
-                // When to stop program (If either Vx or Vy < ETHR)
+                // When to stop program (If either the total energy is less than the threshold or bigger than
+                // the previous energy)
                 if ((KEx + KEy <= ETHR) || ((KEy + KEx) >= (KExLast + KEyLast))) {
                     running = false;
                 }
 
+                // The current values of KEx and KEy will be the previous energies for the next loop
                 KExLast = KEx;
                 KEyLast = KEy;
 
