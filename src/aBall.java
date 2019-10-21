@@ -12,7 +12,7 @@ public class aBall extends Thread  {
     private static final double g = 9.8;               // MKS gravitational constant 9.8 m/s^2 //***
     private static final double Pi = 3.141592654;      // To convert degrees to radians //***
     //private static final double k = 0.0001;            // Air resistance parameter //***
-    private static final double k = 0.0016;           // Air resistance parameter for red ball test //***
+    private static final double k = 0.0001;           // Air resistance parameter for red ball test //***
     private static final double ETHR = 0.01;           // Energy threshold //***
     private static final double PD = 1;                // Trace point diameter //***
     // Initializing variables
@@ -26,6 +26,8 @@ public class aBall extends Thread  {
     double bLoss = 0;
     GOval myBall;
     private bSim link;
+    private boolean running = true; // Condition for program to be running
+
 
 
 
@@ -66,6 +68,18 @@ public class aBall extends Thread  {
         return myBall; //***
     }
 
+    public double getBSize() { //***
+        return bSize; //***
+    }
+
+    public void moveTo(double x, double y) {
+
+    }
+
+    public boolean getRunningStatus() {
+        return running;
+    }
+
     /**
      * The run method implements the simulation loop from Assignment 1.
      * Once the start method is called on the aBall instance, the
@@ -95,8 +109,6 @@ public class aBall extends Thread  {
         if (theta > 90) {
             sign = -1; // If the velocity is in the negative x direction
         }
-
-        boolean running = true; // Condition for program to be running
 
         // Simulation loop
         while (running) {
