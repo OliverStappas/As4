@@ -5,13 +5,16 @@ import java.awt.*;
 
 public class aBall extends Thread  {
 
+    private static final int WIDTH = 1200; // n.b. screen coordinates
     private static final int HEIGHT = 600; //***
-    private static final double SCALE = HEIGHT/100;    //*** pixels per meter
-    private static final double g = 9.8;               //*** MKS gravitational constant 9.8 m/s^2
-    private static final double Pi = 3.141592654;      //*** To convert degrees to radians
-    private static final double k = 0.0001;            //*** Air resistance parameter
-    private static final double ETHR = 0.01;           //*** Energy threshold
-    private static final double PD = 1;                //*** Trace point diameter
+    private static final int OFFSET = 200; //***
+    private static final double SCALE = HEIGHT/100;    // pixels per meter  //***
+    private static final double g = 9.8;               // MKS gravitational constant 9.8 m/s^2 //***
+    private static final double Pi = 3.141592654;      // To convert degrees to radians //***
+    //private static final double k = 0.0001;            // Air resistance parameter //***
+    private static final double k = 0.0001;           // Air resistance parameter for red ball test //***
+    private static final double ETHR = 0.01;           // Energy threshold //***
+    private static final double PD = 1;                // Trace point diameter //***
     // Initializing variables
     double TICK = 0.1; //***
     double Xi = 0;
@@ -22,7 +25,9 @@ public class aBall extends Thread  {
     Color bColor;
     double bLoss = 0;
     GOval myBall;
-    private bSim link; // For multiple constructors
+    private bSim link;
+    private boolean running = true; // Condition for program to be running
+
 
 
 
@@ -63,6 +68,18 @@ public class aBall extends Thread  {
         return myBall; //***
     }
 
+    public double getBSize() { //***
+        return bSize; //***
+    }
+
+    public void moveTo(double x, double y) {
+
+    }
+
+    public boolean getRunningStatus() {
+        return running;
+    }
+
     /**
      * The run method implements the simulation loop from Assignment 1.
      * Once the start method is called on the aBall instance, the
@@ -74,9 +91,9 @@ public class aBall extends Thread  {
 
     public void run() {
 // Simulation goes here...
-        double Vt = g / (4 * Pi * this.bSize * this.bSize * k); //*** Terminal velocity
-        double Vox = this.Vo * Math.cos(theta * Pi / 180); //*** Initial x velocity
-        double Voy = this.Vo * Math.sin(theta * Pi / 180); //*** Initial y velocity
+        double Vt = g / (4 * Pi * this.bSize * this.bSize * k); // Terminal velocity //***
+        double Vox = this.Vo * Math.cos(theta * Pi / 180); // Initial x velocity //***
+        double Voy = this.Vo * Math.sin(theta * Pi / 180); // Initial y velocity //***
         double Xlast = 0; // Previous X position
         double Ylast = 0; // Previous Y position
         double time = 0; // Initial time
@@ -92,8 +109,6 @@ public class aBall extends Thread  {
         if (theta > 90) {
             sign = -1; // If the velocity is in the negative x direction
         }
-
-        boolean running = true; // Condition for program to be running
 
         // Simulation loop
         while (running) {
@@ -138,7 +153,7 @@ public class aBall extends Thread  {
             Ylast = Y;
 
             // Moving red ball and drawing trace points
-            myBall.setLocation(ScrX, ScrY); //*** Moving the red ball to the desired screen coordinates
+            myBall.setLocation(ScrX, ScrY); //***  // Moving the red ball to the desired screen coordinates
             if (link != null) { //***
                 GOval tracePoint = new GOval(X * SCALE, HEIGHT - Y * SCALE, PD, PD); // Initializing the tracepoints
                 tracePoint.setFilled(true);
@@ -149,6 +164,7 @@ public class aBall extends Thread  {
             time += TICK;
 
             // Animation delay
+
             try { // pause for 50 milliseconds  //***
                 Thread.sleep(50);            //***
             } catch (InterruptedException e) {  //***

@@ -9,16 +9,16 @@ public class bSim extends GraphicsProgram {
     private static final int WIDTH = 1200; //*** n.b. screen coordinates
     private static final int HEIGHT = 600; //***
     private static final int OFFSET = 200; //***
-    private static final double SCALE = HEIGHT/100; //*** pixels per meter
-    private static final int NUMBALLS = 100; //*** # balls to simulate
-    private static final double MINSIZE = 1.0; //*** Minimum ball radius (meters )
-    private static final double MAXSIZE = 10.0; //*** Maximum ball radius (meters)
-    private static final double EMIN = 0.1; //*** Minimum loss coefficient //***
-    private static final double EMAX = 0.6; //*** Maximum loss coefficient //***
-    private static final double VoMIN = 40.0; //*** Minimum velocity (meters/sec)
-    private static final double VoMAX = 50.0; //*** Maximum velocity (meters/sec)
-    private static final double ThetaMIN = 80.0; //*** Minimum launch angle (degrees)
-    private static final double ThetaMAX = 100.0; //*** Maximum launch angle (degrees)
+    private static final double SCALE = HEIGHT/100; // pixels per meter //***
+    private static final int NUMBALLS = 60; // # balls to simulate //***
+    private static final double MINSIZE = 1.0; // Minimum ball radius (meters ) //***
+    private static final double MAXSIZE = 7.0; // Maximum ball radius (meters) //***
+    private static final double EMIN = 0.2; // Minimum loss coefficient //***
+    private static final double EMAX = 0.6; // Maximum loss coefficient //***
+    private static final double VoMIN = 40.0; // Minimum velocity (meters/sec) //***
+    private static final double VoMAX = 50.0; // Maximum velocity (meters/sec) //***
+    private static final double ThetaMIN = 80.0; // Minimum launch angle (degrees) //***
+    private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees) //***
     private RandomGenerator rgen = RandomGenerator.getInstance(); //***
 
 
@@ -31,10 +31,13 @@ public class bSim extends GraphicsProgram {
         add(rect);
 
         // Set seed for randomness
-        rgen.setSeed((long) 0.12345); //***
+        rgen.setSeed((long) 424242); //***
+
+        // Creating instance of bTree class
+        bTree myTree = new bTree(); //***
 
         // for loop to randomize and create 100 different balls
-        for (int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= NUMBALLS; i++) {
             // Randomizing the different aBall parameters with boundaries
             double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //***
             Color bColor = rgen.nextColor(); //***
@@ -52,10 +55,10 @@ public class bSim extends GraphicsProgram {
         }
 
         // Test for one ball
-        //aBall redBall = new aBall(5,1,40,85,1,Color.RED,0.4,this); //*** Forward
-        //aBall redBall = new aBall(95,1,40,95,1,Color.RED,0.4,this); //*** Backwards
-        //add(redBall.getBall()); //***
-        //redBall.start(); //***
+        // aBall redBall = new aBall(10.0,100.0,1.0,30.0,6.0,Color.RED,0.25,this); //***
+        // aBall redBall = new aBall(5,1,40,85,1,Color.RED,0.4,this); //***
+        // add(redBall.getBall()); //***
+        // redBall.start(); //***
 
     }
 }
