@@ -1,3 +1,4 @@
+import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
@@ -30,14 +31,16 @@ public class bSim extends GraphicsProgram {
         rect.setFilled(true);
         add(rect);
 
-        // Set seed for randomness
-        rgen.setSeed((long) 424242); //***
-
         // Creating instance of bTree class
         bTree myTree = new bTree(); //***
 
+        // Set seed for randomness
+        rgen.setSeed((long) 424242); //***
+
+
+
         // for loop to randomize and create 100 different balls
-            for (int i = 1; i <= NUMBALLS; i++) {
+        for (int i = 1; i <= NUMBALLS; i++) {
             // Randomizing the different aBall parameters with boundaries
             double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //***
             Color bColor = rgen.nextColor(); //***
@@ -46,11 +49,23 @@ public class bSim extends GraphicsProgram {
             double theta = rgen.nextDouble(ThetaMIN, ThetaMAX); //***
 
             // Creating the ball with the previously randomly generate parameters
-            aBall ball = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,null); // Adding the ball (add
+            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,null); // Adding the ball (add
                                                                                                        // link instead of null if
                                                                                                        // you want tracepoints)
-            add(ball.getBall());
-            ball.start();
+            add(iBall.getBall());
+            myTree.addNode(iBall);
+            iBall.start();
+
+        }
+
+        while (myTree.isRunning()) {
+            GLabel label = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2);
+            label.setFont("SansSerif-36");
+            label.setColor(Color.RED);
+            add(label);
+            //Code to wait for a mouse click // Wait
+            this.waitForClick(); // Wait for user to click to continue program
+            myTree.stackBalls(); // Lay out balls in order
 
         }
 

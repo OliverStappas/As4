@@ -1,3 +1,7 @@
+//Since the stackBalls() method in the bTree class does not need to reference any methods in the GraphicsProgram class,
+// there is no need to include a link to bSim as the method argument.  Consequently the method signature for stackBalls
+// is simply void stackBalls().
+
 public class bTree {
 
     // Instance variables
@@ -5,8 +9,9 @@ public class bTree {
     private double X;
     private double Y;
     private double lastSize;
+    private double DELTASIZE = 0.1;
 
-    bNode root=null;
+    bNode root = null;
 
     /**
      * addNode method - adds a new node by descending to the leaf node
@@ -94,20 +99,30 @@ public class bTree {
         // processing for current node
         root.data.getBSize(); // Get size of ball at current node
         // Update values of X and Y to determine where to place it.
-        /*Given a set of balls ordered from smallest to largest.
-        2. For I = 1 to Number of balls in set
-        3. If current size – last size > DELTASIZE
-        4. Start a new stack
-        5. Else
-        6. Put current ball on top of last ball
-        7. End*/
-        for (int i = 1; i <= 60)
+//        Given a set of balls ordered from smallest to largest.
+//
+//        2. For I = 1 to Number of balls in set
+        for (int i = 1; i <= 60; i++) {
+            if(){}
+            else {
+                root.data.moveTo();
+            }
+        }
+//        3. If current size – last size > DELTASIZE
+//        4. Start a new stack
+//        5. Else
+//        6. Put current ball on top of last ball
+//        7. End
+
+
+
         //root.data.moveTo(X,Y); // to place the ball there
         //System.out.println(root.data);
         if (root.right != null) traverse_inorder(root.right);
     }
 
-    public boolean isRunning() {
+    public boolean isRunning() { //method based on the in-order traversal routine that scans the B-Tree and checks the
+                                // status of each aBall,
     }
 
     public void stackBalls() {

@@ -73,6 +73,9 @@ public class aBall extends Thread  {
     }
 
     public void moveTo(double x, double y) {
+        int X = (int) ((x - bSize) * SCALE); //***
+        int Y = (int) (HEIGHT - (y + bSize) * SCALE); //***
+        myBall.setLocation(X, Y);
 
     }
 
