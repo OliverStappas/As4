@@ -169,7 +169,7 @@ public class aBall extends Thread  {
             // Animation delay
 
             try { // pause for 50 milliseconds  //***
-                Thread.sleep(50);            //***
+                Thread.sleep(5);            //*** should be 50
             } catch (InterruptedException e) {  //***
                 e.printStackTrace();            //***
             }

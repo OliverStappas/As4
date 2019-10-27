@@ -58,16 +58,29 @@ public class bSim extends GraphicsProgram {
 
         }
 
+        println("We're fucked");
         while (myTree.isRunning()) {
-            GLabel label = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2);
-            label.setFont("SansSerif-36");
-            label.setColor(Color.RED);
-            add(label);
-            //Code to wait for a mouse click // Wait
-            this.waitForClick(); // Wait for user to click to continue program
-            myTree.stackBalls(); // Lay out balls in order
-
+            // Block until termination
+            try { // pause for 50 milliseconds  //***
+                Thread.sleep(5);            //*** should be 50
+            } catch (InterruptedException e) {  //***
+                e.printStackTrace();            //***
+            }
         }
+        println("Death");
+        GLabel label1 = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2);
+        label1.setFont("SansSerif-36");
+        label1.setColor(Color.RED);
+        add(label1);
+        //Code to wait for a mouse click // Wait
+        this.waitForClick(); // Wait for user to click to continue program
+        label1.setVisible(false);
+        myTree.stackBalls(); // Lay out balls in order
+        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2);
+        label2.setFont("SansSerif-36");
+        label2.setColor(Color.RED);
+        add(label2);
+
 
         // Test for one ball
         // aBall redBall = new aBall(10.0,100.0,1.0,30.0,6.0,Color.RED,0.25,this); //***

@@ -6,10 +6,11 @@ public class bTree {
 
     // Instance variables
 
-    private double X;
+    private double X; // ex
     private double Y;
     private double lastSize;
     private double DELTASIZE = 0.1;
+
 
     bNode root = null;
 
@@ -81,51 +82,50 @@ public class bTree {
         return node;										// return handle to new object
     }
 
-
-    /**
-     * inorder method - inorder traversal via call to recursive method
-     */
-
-    public void inorder() {									// hides recursion from user
-        traverse_inorder(root);
-    }
-
     /**
      * traverse_inorder method - recursively traverses tree in order (LEFT-Root-RIGHT) and prints each node.
      */
 
     private void traverse_inorder(bNode root) {
-        if (root.left != null) traverse_inorder(root.left);
-        // processing for current node
-        root.data.getBSize(); // Get size of ball at current node
-        // Update values of X and Y to determine where to place it.
-//        Given a set of balls ordered from smallest to largest.
-//
-//        2. For I = 1 to Number of balls in set
-        for (int i = 1; i <= 60; i++) {
-            if(){}
-            else {
-                root.data.moveTo();
-            }
+        if (root != null) {
+            traverse_inorder(root.left);
+            processBall(root);
+            traverse_inorder(root.right);
         }
-//        3. If current size – last size > DELTASIZE
-//        4. Start a new stack
-//        5. Else
-//        6. Put current ball on top of last ball
-//        7. End
-
-
-
-        //root.data.moveTo(X,Y); // to place the ball there
-        //System.out.println(root.data);
-        if (root.right != null) traverse_inorder(root.right);
     }
 
-    public boolean isRunning() { //method based on the in-order traversal routine that scans the B-Tree and checks the
-                                // status of each aBall,
+    private void processBall(bNode root) {
+        double currentSize = root.data.getBSize();
+        if (lastSize == 0) { // Condition for first ball
+            X = Y = currentSize;
+        }
+        else if (currentSize - lastSize > DELTASIZE) { // condition for new stack
+            X += 2 * currentSize;
+            Y = currentSize;
+
+        } else { // put on top of current stack (if the same size as previous ball)
+            Y += 2 * currentSize;
+        }
+        root.data.moveTo(X, Y);
+        lastSize = currentSize;
+    }
+
+
+    private boolean traverseRunning (bNode root) {
+        if (root != null) {
+            if (root.data.getRunningStatus() || traverseRunning(root.left) || traverseRunning(root.right)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isRunning() { //method based on the in-order traversal routine that scans the B-Tree and checks the status of each aBall,
+        return traverseRunning(root);
     }
 
     public void stackBalls() {
+        traverse_inorder(root);
 
     }
 
