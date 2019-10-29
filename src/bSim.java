@@ -58,7 +58,6 @@ public class bSim extends GraphicsProgram {
 
         }
 
-        println("We're fucked");
         while (myTree.isRunning()) {
             // Block until termination
             try { // pause for 50 milliseconds  //***
