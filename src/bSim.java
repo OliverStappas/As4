@@ -49,26 +49,16 @@ public class bSim extends GraphicsProgram {
             double theta = rgen.nextDouble(ThetaMIN, ThetaMAX); //***
 
             // Creating the ball with the previously randomly generate parameters
-            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,null); // Adding the ball (add
-                                                                                                       // link instead of null if
-                                                                                                       // you want tracepoints)
+            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss); // Adding the ball
             add(iBall.getBall());
             myTree.addNode(iBall);
             iBall.start();
 
         }
 
-        while (myTree.isRunning()) {
-            // Block until termination
-            try { // pause for 50 milliseconds  //***
-                Thread.sleep(5);            //*** should be 50
-            } catch (InterruptedException e) {  //***
-                e.printStackTrace();            //***
-            }
-        }
-        println("Death");
+        while (myTree.isRunning()) {}
         GLabel label1 = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2);
-        label1.setFont("SansSerif-36");
+        label1.setFont("SansSerif-24");
         label1.setColor(Color.RED);
         add(label1);
         //Code to wait for a mouse click // Wait
@@ -79,13 +69,6 @@ public class bSim extends GraphicsProgram {
         label2.setFont("SansSerif-36");
         label2.setColor(Color.RED);
         add(label2);
-
-
-        // Test for one ball
-        // aBall redBall = new aBall(10.0,100.0,1.0,30.0,6.0,Color.RED,0.25,this); //***
-        // aBall redBall = new aBall(5,1,40,85,1,Color.RED,0.4,this); //***
-        // add(redBall.getBall()); //***
-        // redBall.start(); //***
 
     }
 }

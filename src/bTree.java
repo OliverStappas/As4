@@ -6,8 +6,8 @@ public class bTree {
 
     // Instance variables
 
-    private double X; // ex
-    private double Y;
+    private double X; // X offset
+    private double Y; // Y offset
     private double lastSize;
     private double DELTASIZE = 0.1;
 

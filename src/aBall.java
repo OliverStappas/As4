@@ -3,6 +3,11 @@
 import acm.graphics.GOval;
 import java.awt.*;
 
+/**
+ * @author Oliver Stappas
+ * Creates and moves ball objects
+ */
+
 public class aBall extends Thread  {
 
     private static final int WIDTH = 1200; // n.b. screen coordinates
@@ -26,25 +31,22 @@ public class aBall extends Thread  {
     double bLoss = 0;
     GOval myBall;
     private bSim link;
-    private boolean running = true; // Condition for program to be running
-
-
-
+    private volatile boolean running = true; // Condition for program to be running
 
     /**
-     * The constructor specifies the parameters for simulation. They are
      *
-     * @param Xi double The initial X position of the center of the ball
-     * @param Yi double The initial Y position of the center of the ball
-     * @param Vo double The initial velocity of the ball at launch
-     * @param theta double Launch angle (with the horizontal plane)
-     * @param bSize double The radius of the ball in simulation units
-     * @param bColor Color The initial color of the ball
-     * @param bLoss double Fraction [0,1] of the energy lost on each bounce
+     * @param Xi Initial X position
+     * @param Yi Initial Y position
+     * @param Vo Initial velocity
+     * @param theta Initial launch angle
+     * @param bSize Ball Radius
+     * @param bColor Ball color
+     * @param bLoss Energy Loss
+     *
      */
 
     public aBall (double Xi, double Yi, double Vo, double theta,
-                  double bSize, Color bColor, double bLoss, bSim link) {
+                  double bSize, Color bColor, double bLoss) {
         // Get simulation parameters
         this.Xi = Xi; //***
         this.Yi = Yi; //***
@@ -59,8 +61,6 @@ public class aBall extends Thread  {
         myBall = new GOval(this.Xi * SCALE, this.Yi * SCALE, bPixelSize * 2, bPixelSize * 2);
         myBall.setFilled(true);
         myBall.setColor(this.bColor);
-
-        this.link = link;
 
     }
 
@@ -155,13 +155,8 @@ public class aBall extends Thread  {
             Xlast = X;
             Ylast = Y;
 
-            // Moving red ball and drawing trace points
+            // Moving red ball
             myBall.setLocation(ScrX, ScrY); //***  // Moving the red ball to the desired screen coordinates
-            if (link != null) { //***
-                GOval tracePoint = new GOval(X * SCALE, HEIGHT - Y * SCALE, PD, PD); // Initializing the tracepoints
-                tracePoint.setFilled(true);
-                link.add(tracePoint); // Drawing the tracepoints on the screen
-            }
 
             // Time Update
             time += TICK;
