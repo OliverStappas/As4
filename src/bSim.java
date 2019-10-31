@@ -1,9 +1,15 @@
+// Comments with *** in front them are taken from the ECSE 202 Assignment 1, 2 and 3 Instructions
+
 import acm.graphics.GLabel;
 import acm.graphics.GRect;
 import acm.program.GraphicsProgram;
 import acm.util.RandomGenerator;
 import java.awt.*;
 
+/**
+ * The simulation class that extends GraphicsProgram and sets up the screen to bounce the balls from aBall and put them
+ * in the bTree
+ */
 
 public class bSim extends GraphicsProgram {
     // Parameters used in this program
@@ -39,7 +45,7 @@ public class bSim extends GraphicsProgram {
 
 
 
-        // for loop to randomize and create 100 different balls
+        // for loop to randomize and create 60 different balls
         for (int i = 1; i <= NUMBALLS; i++) {
             // Randomizing the different aBall parameters with boundaries
             double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //***
@@ -50,22 +56,22 @@ public class bSim extends GraphicsProgram {
 
             // Creating the ball with the previously randomly generate parameters
             aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss); // Adding the ball
-            add(iBall.getBall());
-            myTree.addNode(iBall);
-            iBall.start();
+            add(iBall.getBall()); //*** Getting the ball object
+            myTree.addNode(iBall); //*** Adding balls to a bTree
+            iBall.start(); // Starting the ball simulation
 
         }
 
-        while (myTree.isRunning()) {}
-        GLabel label1 = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2);
+        while (myTree.isRunning()) {} //*** Loop to block following code from running
+        GLabel label1 = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2); // Message to click to stack balls
         label1.setFont("SansSerif-24");
         label1.setColor(Color.RED);
         add(label1);
         //Code to wait for a mouse click // Wait
-        this.waitForClick(); // Wait for user to click to continue program
-        label1.setVisible(false);
-        myTree.stackBalls(); // Lay out balls in order
-        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2);
+        this.waitForClick(); // Wait for user to click to continue program (found from looking through Glabel methods)
+        label1.setVisible(false); // Making the first message invisible (found from looking through Glabel methods)
+        myTree.stackBalls(); //*** Lay out balls in order
+        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2); // Message that balls are stacked
         label2.setFont("SansSerif-36");
         label2.setColor(Color.RED);
         add(label2);

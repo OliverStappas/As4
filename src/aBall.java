@@ -1,4 +1,4 @@
-// Comments with *** in front them are taken from the ECSE 202 Assignment 1 and 2 Instructions
+// Comments with *** in front them are taken from the ECSE 202 Assignment 1, 2 and 3 Instructions
 
 import acm.graphics.GOval;
 import java.awt.*;
@@ -21,15 +21,15 @@ public class aBall extends Thread  {
     private static final double ETHR = 0.01;           // Energy threshold //***
     private static final double PD = 1;                // Trace point diameter //***
     // Initializing variables
-    double TICK = 0.1; //***
-    double Xi = 0;
-    double Yi = 0;
-    double Vo = 0;
-    double theta = 0;
-    double bSize = 0;
-    Color bColor;
-    double bLoss = 0;
-    GOval myBall;
+    private double TICK = 0.1; //***
+    private double Xi = 0;
+    private double Yi = 0;
+    private double Vo = 0;
+    private double theta = 0;
+    private double bSize = 0;
+    private  Color bColor;
+    private double bLoss = 0;
+    private GOval myBall;
     private bSim link;
     private volatile boolean running = true; // Condition for program to be running
 
@@ -64,13 +64,29 @@ public class aBall extends Thread  {
 
     }
 
+    /**
+     * @return Returns the ball object
+     */
+
     public GOval getBall() { //***
         return myBall; //***
     }
 
+    /**
+     * @return Returns the ball size
+     */
+
     public double getBSize() { //***
         return bSize; //***
     }
+
+    /**
+     *
+     * @param x desired X location in meters
+     * @param y desired Y location in meters
+     *
+     * Moves the ball to the desired location with simulation parameters
+     */
 
     public void moveTo(double x, double y) {
         int X = (int) ((x - bSize) * SCALE); //***
@@ -79,6 +95,10 @@ public class aBall extends Thread  {
 
     }
 
+    /**
+     *
+     * @return Returns whether or not the ball is still bouncing
+     */
     public boolean getRunningStatus() {
         return running;
     }
@@ -89,7 +109,6 @@ public class aBall extends Thread  {
      * code in the run method is executed concurrently with the main
      * program.
      *
-     * @return void
      */
 
     public void run() {
@@ -164,7 +183,7 @@ public class aBall extends Thread  {
             // Animation delay
 
             try { // pause for 50 milliseconds  //***
-                Thread.sleep(5);            //*** should be 50
+                Thread.sleep(50);            //*** s
             } catch (InterruptedException e) {  //***
                 e.printStackTrace();            //***
             }
