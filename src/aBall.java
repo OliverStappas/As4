@@ -46,7 +46,7 @@ public class aBall extends Thread  {
      */
 
     public aBall (double Xi, double Yi, double Vo, double theta,
-                  double bSize, Color bColor, double bLoss) {
+                  double bSize, Color bColor, double bLoss, bSim link) {
         // Get simulation parameters
         this.Xi = Xi; //***
         this.Yi = Yi; //***
@@ -55,6 +55,7 @@ public class aBall extends Thread  {
         this.bSize = bSize; //***
         this.bColor = bColor; //***
         this.bLoss = bLoss; //***
+        this.link = link; //***
 
         // Creating a ball from constructor parameters
         double bPixelSize = this.bSize * SCALE; //***
@@ -173,6 +174,14 @@ public class aBall extends Thread  {
             // The current values of X and Y will be the previous positions for the next loop
             Xlast = X;
             Ylast = Y;
+
+            // Moving red ball and drawing trace points
+            myBall.setLocation(ScrX, ScrY); //***  // Moving the red ball to the desired screen coordinates
+            if (link != null) { //***
+                GOval tracePoint = new GOval(X * SCALE, HEIGHT - Y * SCALE, PD, PD); // Initializing the tracepoints
+                tracePoint.setFilled(true);
+                link.add(tracePoint); // Drawing the tracepoints on the screen
+            }
 
             // Moving red ball
             myBall.setLocation(ScrX, ScrY); //***  // Moving the red ball to the desired screen coordinates

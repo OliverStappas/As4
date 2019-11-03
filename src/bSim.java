@@ -55,7 +55,7 @@ public class bSim extends GraphicsProgram {
             double theta = rgen.nextDouble(ThetaMIN, ThetaMAX); //***
 
             // Creating the ball with the previously randomly generate parameters
-            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss); // Adding the ball
+            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,this); // Adding the ball // Null for no trace, this for trace
             add(iBall.getBall()); //*** Getting the ball object
             myTree.addNode(iBall); //*** Adding balls to a bTree
             iBall.start(); // Starting the ball simulation
