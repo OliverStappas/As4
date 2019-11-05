@@ -28,6 +28,12 @@ public class bSim extends GraphicsProgram {
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees) //***
     private RandomGenerator rgen = RandomGenerator.getInstance(); //***
 
+    public void doSim(){}
+    public void doStack(){}
+
+    new JSlider (min, max, value)
+
+
 
     public void run() {
         this.resize(WIDTH, HEIGHT + OFFSET); //*** size display window
@@ -75,6 +81,7 @@ public class bSim extends GraphicsProgram {
         label2.setFont("SansSerif-36");
         label2.setColor(Color.RED);
         add(label2);
+
 
     }
 }
