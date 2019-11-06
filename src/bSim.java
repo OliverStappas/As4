@@ -32,6 +32,8 @@ public class bSim extends GraphicsProgram {
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees) //***
     private RandomGenerator rgen = RandomGenerator.getInstance(); //***
     boolean simEnable = false;
+    JComboBox bSimC = new JComboBox();
+
 
     public void init() {
         //…other code…
@@ -61,8 +63,6 @@ public class bSim extends GraphicsProgram {
 
     }
 
-
-
     /* Listens for a button action */
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -79,14 +79,26 @@ public class bSim extends GraphicsProgram {
 
     public void itemStateChanged(ItemEvent e) {
         JComboBox source = (JComboBox)e.getSource();
-        if (source==bSimC) { \
-            if (bSimC.getSelectedIndex()==1) {
-                System.out.println("Starting simulation");
+        if (source == bSimC) { \
+            if (bSimC.getSelectedIndex() == 1) {
+                System.out.println("Running simulation");
                 doSim();
             }
-            else if (bSimC.getSelectedIndex()==2) {
-                System.out.println("Histogramming balls");
+            else if (bSimC.getSelectedIndex() == 2) {
+                System.out.println("Stacking balls");
                 doHist();
+            }
+            else if (bSimC.getSelectedIndex() == 3) {
+                System.out.println("Clearing");
+                clear();
+            }
+            else if (bSimC.getSelectedIndex() == 4) {
+                System.out.println("Stopping");
+                stopping();
+            }
+            else if (bSimC.getSelectedIndex() == 2) {
+                System.out.println("Qutiing");
+                quit();
             }
             etc…
         }
