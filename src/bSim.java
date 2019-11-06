@@ -31,8 +31,32 @@ public class bSim extends GraphicsProgram {
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees) //***
     private RandomGenerator rgen = RandomGenerator.getInstance(); //***
 
-    public void doSim(){}
-    public void doStack(){}
+    //public void doSim(){}
+    //public void doStack(){}
+
+    //add(new JButton("Run"));
+    //add(new JButton("Stack"));
+    //add(new JButton("Clear"));
+    //add(new JButton("Stop"));
+    //add(new JButton("Quit"));
+
+
+    //String[] petStrings = { "Run", "Stack", "Clear", "Stop", "Quit" };
+
+    //Create the combo box, select item at index 4.
+    //Indices start at 0, so 4 specifies the pig.
+    //JComboBox petList = new JComboBox(petStrings);
+    //petList.setSelectedIndex(4);
+    //petList.addActionListener(this);
+
+    //JComboBox sizeChooser = new JComboBox();
+    //add(new JComboBox(""), NORTH);
+    //JToggleButton
+    //sizeChooser.addItem("Small");
+    //sizeChooser.addItem("Medium");
+    //sizeChooser.addItem("Large");
+    //sizeChooser.addItem("X-Large");
+    //sizeChooser.setEditable(false);
 
     //new JSlider (min, max, value)
 
@@ -43,6 +67,7 @@ public class bSim extends GraphicsProgram {
     public class TemperatureConverter extends Program {
         /* Initializes the graphical user interface */
         public void init() {
+
             setLayout(new TableLayout(2, 3));
             fahrenheitField = new IntField(32);
             fahrenheitField.setActionCommand("F -> C");
@@ -50,7 +75,7 @@ public class bSim extends GraphicsProgram {
             celsiusField = new IntField(0);
             celsiusField.setActionCommand("C -> F");
             celsiusField.addActionListener(this);
-            add(new JLabel("Degrees Fahrenheit"));
+            add((new JLabel("Degrees Fahrenheit")),NORTH);
             add(fahrenheitField);
             add(new JButton("F -> C"));
             add(new JLabel("Degrees Celsius"));
@@ -79,53 +104,53 @@ public class bSim extends GraphicsProgram {
 
 
 
-    public void run() {
-        this.resize(WIDTH, HEIGHT + OFFSET); //*** size display window
-
-        // Ground plane
-        GRect rect = new GRect(0, HEIGHT, 1200, 3);
-        rect.setFilled(true);
-        add(rect);
-
-        // Creating instance of bTree class
-        bTree myTree = new bTree(); //***
-
-        // Set seed for randomness
-        rgen.setSeed((long) 424242); //***
-
-
-
-        // for loop to randomize and create 60 different balls
-        for (int i = 1; i <= NUMBALLS; i++) {
-            // Randomizing the different aBall parameters with boundaries
-            double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //***
-            Color bColor = rgen.nextColor(); //***
-            double bLoss = rgen.nextDouble(EMIN, EMAX); //***
-            double bVel = rgen.nextDouble(VoMIN, VoMAX); //***
-            double theta = rgen.nextDouble(ThetaMIN, ThetaMAX); //***
-
-            // Creating the ball with the previously randomly generate parameters
-            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,this); // Adding the ball // Null for no trace, this for trace
-            add(iBall.getBall()); //*** Getting the ball object
-            myTree.addNode(iBall); //*** Adding balls to a bTree
-            iBall.start(); // Starting the ball simulation
-
-        }
-
-        while (myTree.isRunning()) {} //*** Loop to block following code from running
-        GLabel label1 = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2); // Message to click to stack balls
-        label1.setFont("SansSerif-24");
-        label1.setColor(Color.RED);
-        add(label1);
-        //Code to wait for a mouse click // Wait
-        this.waitForClick(); // Wait for user to click to continue program (found from looking through Glabel methods)
-        label1.setVisible(false); // Making the first message invisible (found from looking through Glabel methods)
-        myTree.stackBalls(); //*** Lay out balls in order
-        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2); // Message that balls are stacked
-        label2.setFont("SansSerif-36");
-        label2.setColor(Color.RED);
-        add(label2);
-
-
-    }
+//    public void run() {
+//        this.resize(WIDTH, HEIGHT + OFFSET); //*** size display window
+//
+//        // Ground plane
+//        GRect rect = new GRect(0, HEIGHT, 1200, 3);
+//        rect.setFilled(true);
+//        add(rect);
+//
+//        // Creating instance of bTree class
+//        bTree myTree = new bTree(); //***
+//
+//        // Set seed for randomness
+//        rgen.setSeed((long) 424242); //***
+//
+//
+//
+//        // for loop to randomize and create 60 different balls
+//        for (int i = 1; i <= NUMBALLS; i++) {
+//            // Randomizing the different aBall parameters with boundaries
+//            double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //***
+//            Color bColor = rgen.nextColor(); //***
+//            double bLoss = rgen.nextDouble(EMIN, EMAX); //***
+//            double bVel = rgen.nextDouble(VoMIN, VoMAX); //***
+//            double theta = rgen.nextDouble(ThetaMIN, ThetaMAX); //***
+//
+//            // Creating the ball with the previously randomly generate parameters
+//            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,this); // Adding the ball // Null for no trace, this for trace
+//            add(iBall.getBall()); //*** Getting the ball object
+//            myTree.addNode(iBall); //*** Adding balls to a bTree
+//            iBall.start(); // Starting the ball simulation
+//
+//        }
+//
+//        while (myTree.isRunning()) {} //*** Loop to block following code from running
+//        GLabel label1 = new GLabel("Click mouse to continue", WIDTH/2, HEIGHT/2); // Message to click to stack balls
+//        label1.setFont("SansSerif-24");
+//        label1.setColor(Color.RED);
+//        add(label1);
+//        //Code to wait for a mouse click // Wait
+//        this.waitForClick(); // Wait for user to click to continue program (found from looking through Glabel methods)
+//        label1.setVisible(false); // Making the first message invisible (found from looking through Glabel methods)
+//        myTree.stackBalls(); //*** Lay out balls in order
+//        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2); // Message that balls are stacked
+//        label2.setFont("SansSerif-36");
+//        label2.setColor(Color.RED);
+//        add(label2);
+//
+//
+//    }
 }
