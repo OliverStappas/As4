@@ -32,10 +32,12 @@ public class bSim extends GraphicsProgram {
     private static final double ThetaMAX = 100.0; // Maximum launch angle (degrees) //***
     private RandomGenerator rgen = RandomGenerator.getInstance(); //***
     private boolean simEnable = false;
-    JPanel inputPanel = new JPanel(new TableLayout(9,2));
-    JPanel chooseBoxPanel = new JPanel();
-    JPanel tracePanel = new JPanel();
-    JComboBox bSimC = new JComboBox();
+    private JPanel inputPanel = new JPanel(new TableLayout(9,2));
+    private JPanel chooseBoxPanel = new JPanel();
+    private JPanel tracePanel = new JPanel();
+    private JComboBox bSimC = new JComboBox();
+    // Creating instance of bTree class
+    private bTree myTree = new bTree(); //***
 
     public void init() {
         //…other code…
@@ -129,14 +131,14 @@ public class bSim extends GraphicsProgram {
 //        add(new JButton("C -> F"));
 //        addActionListeners();
 //
-//            while(true) {
-//                pause(200);
-//                if (simEnable) { // Run once, then stop
-//                    doSim();
-//                    bSimC.setSelectedIndex(0);
-//                    simEnable = false;
-//                }
-//            }
+            while(true) {
+                pause(200);
+                if (simEnable) { // Run once, then stop
+                    doSim();
+                    bSimC.setSelectedIndex(0);
+                    simEnable = false;
+                }
+            }
 
     }
 
@@ -154,70 +156,85 @@ public class bSim extends GraphicsProgram {
 //        }
 //    }
 //
-//    public void itemStateChanged(ItemEvent e) {
-//        JComboBox source = (JComboBox)e.getSource();
-//        if (source == bSimC) { \
-//            if (bSimC.getSelectedIndex() == 1) {
-//                System.out.println("Running simulation");
-//                doSim();
-//            }
-//            else if (bSimC.getSelectedIndex() == 2) {
-//                System.out.println("Stacking balls");
-//                doStack();
-//            }
-//            else if (bSimC.getSelectedIndex() == 3) {
-//                System.out.println("Clearing");
-//                clear();
-//            }
-//            else if (bSimC.getSelectedIndex() == 4) {
-//                System.out.println("Stopping");
-//                stopping();
-//            }
-//            else if (bSimC.getSelectedIndex() == 2) {
-//                System.out.println("Qutiing");
-//                quit();
-//            }
-//            etc…
-//        }
-//    }
-//
-//    public void doSim() {
-//        // Creating instance of bTree class
-//        bTree myTree = new bTree(); //***
-//
-//        // for loop to randomize and create 60 different balls
-//        for (int i = 1; i <= NUMBALLS; i++) {
-//            // Randomizing the different aBall parameters with boundaries
-//            double bSize = rgen.nextDouble(MINSIZE, MAXSIZE); //***
-//            Color bColor = rgen.nextColor(); //***
-//            double bLoss = rgen.nextDouble(EMIN, EMAX); //***
-//            double bVel = rgen.nextDouble(VoMIN, VoMAX); //***
-//            double theta = rgen.nextDouble(ThetaMIN, ThetaMAX); //***
-//
-//            // Creating the ball with the previously randomly generate parameters
-//            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,this); // Adding the ball // Null for no trace, this for trace
-//            add(iBall.getBall()); //*** Getting the ball object
-//            myTree.addNode(iBall); //*** Adding balls to a bTree
-//            iBall.start(); // Starting the ball simulation
-//            while (myTree.isRunning()) {} //*** Loop to block following code from running
-//            GLabel label1 = new GLabel("Simulation completed", WIDTH/2, HEIGHT/2); // Message to click to stack balls
-//            label1.setFont("SansSerif-24");
-//            label1.setColor(Color.RED);
-//            add(label1);
-//            //label1.setVisible(false); // Making the first message invisible (found from looking through Glabel methods)
-//
-//        }
-//
-//    }
-//
-//    public void doStack() {
-//        myTree.stackBalls(); //*** Lay out balls in order
+    public void itemStateChanged(ItemEvent e) {
+        JComboBox source = (JComboBox)e.getSource();
+        if (source == bSimC) {
+            if (bSimC.getSelectedIndex() == 1) {
+                System.out.println("Running simulation");
+                doSim();
+            }
+            else if (bSimC.getSelectedIndex() == 2) {
+                System.out.println("Stacking balls");
+                doStack();
+            }
+            else if (bSimC.getSelectedIndex() == 3) {
+                System.out.println("Clearing");
+                clear();
+            }
+            else if (bSimC.getSelectedIndex() == 4) {
+                System.out.println("Stopping");
+                stop();
+            }
+            else if (bSimC.getSelectedIndex() == 2) {
+                System.out.println("Qutiing");
+                quit();
+            }
+           // etc…
+        }
+    }
+
+    public void doSim() {
+
+        int numBalls = numballsField.this.getValue();
+        double minSize =;
+        double maxSize =;
+        double lossMin =;
+        double lossMax =;
+        double minVel =;
+        double maxVel =;
+        double thMin =;
+        double thMax =;
+        // for loop to randomize and create 60 different balls
+        for (int i = 1; i <= NUMBALLS; i++) {
+            // Randomizing the different aBall parameters with boundaries
+            double bSize = rgen.nextDouble(minSize, maxSize); //***
+            Color bColor = rgen.nextColor(); //***
+            double bLoss = rgen.nextDouble(lossMin, lossMax); //***
+            double bVel = rgen.nextDouble(minVel, maxVel); //***
+            double theta = rgen.nextDouble(thMin, thMax); //***
+
+            // Creating the ball with the previously randomly generate parameters
+            aBall iBall = new aBall((WIDTH/2)/SCALE,bSize,bVel,theta,bSize,bColor,bLoss,this); // Adding the ball // Null for no trace, this for trace
+            add(iBall.getBall()); //*** Getting the ball object
+            myTree.addNode(iBall); //*** Adding balls to a bTree
+            iBall.start(); // Starting the ball simulation
+            while (myTree.isRunning()) {} //*** Loop to block following code from running
+            GLabel label1 = new GLabel("Simulation completed", WIDTH/2, HEIGHT/2); // Message to click to stack balls
+            label1.setFont("SansSerif-24");
+            label1.setColor(Color.RED);
+            add(label1);
+            //label1.setVisible(false); // Making the first message invisible (found from looking through Glabel methods)
+
+        }
+
+    }
+
+    public void doStack() {
+        myTree.stackBalls(); //*** Lay out balls in order
 //        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2); // Message that balls are stacked
 //        label2.setFont("SansSerif-36");
 //        label2.setColor(Color.RED);
 //        add(label2);
 //
-//    }
+    }
+
+    public void clear() {
+    }
+    public void stop() {
+    }
+    public void quit() {
+    }
+
 //    /* Private instance variables */
 //    private IntField fahrenheitField;
 //    private IntField celsiusField;
