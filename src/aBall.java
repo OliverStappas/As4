@@ -32,6 +32,8 @@ public class aBall extends Thread  {
     private GOval myBall;
     private bSim link;
     private volatile boolean running = true; // Condition for program to be running
+    private bTree traceTree = new bTree();
+
 
     /**
      *
@@ -63,6 +65,14 @@ public class aBall extends Thread  {
         myBall.setFilled(true);
         myBall.setColor(this.bColor);
 
+    }
+
+    /**
+     *
+     * @param status
+     */
+    public void setStatus(boolean status){
+        running = status;
     }
 
     /**
@@ -111,7 +121,6 @@ public class aBall extends Thread  {
      * program.
      *
      */
-
     public void run() {
 // Simulation goes here...
         double Vt = g / (4 * Pi * this.bSize * this.bSize * k); // Terminal velocity //***
@@ -181,6 +190,7 @@ public class aBall extends Thread  {
                 GOval tracePoint = new GOval(X * SCALE, HEIGHT - Y * SCALE, PD, PD); // Initializing the tracepoints
                 tracePoint.setFilled(true);
                 link.add(tracePoint); // Drawing the tracepoints on the screen
+                tracePoint.setColor(bColor);
             }
 
             // Moving red ball

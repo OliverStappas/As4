@@ -142,8 +142,31 @@ public class bTree {
      */
     public void stackBalls() { //method that performs traverseInOrderAndStack on the root without needing a parameter
         traverseInOrderAndStack(root);
+        lastSize = 0;
 
     }
+
+    /**
+     * Method that
+     * @param root Ball node in the bTree
+     */
+    private void stopBallsTraversal(bNode root) {
+        if (root.left != null) {
+            stopBallsTraversal(root.left);
+            root.left.data.setStatus(false);
+        }
+            root.data.setStatus(false);
+        if (root.right != null) {
+            stopBallsTraversal(root.right);
+        }
+    }
+
+    public void stopBalls() {
+        stopBallsTraversal(root);
+    }
+
+
+
 
 }
 
