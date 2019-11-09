@@ -56,7 +56,7 @@ public class bSim extends GraphicsProgram implements ItemListener {
     public void init() {
         //…other code
 
-        this.resize(WIDTH + 152, HEIGHT + OFFSET); //*** size display window
+        this.resize(WIDTH + 152, HEIGHT + OFFSET + 100); //*** size display window
 
         rect.setFilled(true);
         add(rect);
@@ -65,8 +65,6 @@ public class bSim extends GraphicsProgram implements ItemListener {
         rgen.setSeed((long) 424242); //***
 
         add(inputPanel, EAST);
-        //inputPanel.setLayout(new TableLayout(9,2));
-        //setLayout(new TableLayout(9, 2));
 
         inputPanel.add((new JLabel("NUMBALLS")));
         numballsField = new IntField(60, 1,  255);
@@ -96,7 +94,7 @@ public class bSim extends GraphicsProgram implements ItemListener {
         maxVelField = new DoubleField( 50.0,1.0,  200.0);
         inputPanel.add((maxVelField));
 
-        inputPanel.add((new JLabel("TH MAX")));
+        inputPanel.add((new JLabel("TH MIN")));
         thetaMinField = new DoubleField( 80.0,1.0,  180.0);
         inputPanel.add((thetaMinField));
 
@@ -139,8 +137,8 @@ public class bSim extends GraphicsProgram implements ItemListener {
             if (source == bSimC) {
                 if (bSimC.getSelectedIndex() == 1) {
                     System.out.println("Running simulation");
-                    doSim();
-                    bSimC.setSelectedIndex(0);
+                    //doSim();
+                    simEnable = true;
                 } else if (bSimC.getSelectedIndex() == 2) {
                     System.out.println("Stacking balls");
                     doStack();
@@ -158,7 +156,7 @@ public class bSim extends GraphicsProgram implements ItemListener {
 
                 } else if (bSimC.getSelectedIndex() == 5) {
                     System.out.println("Quitting");
-                    //  quit();
+                    System.exit(0);
                     bSimC.setSelectedIndex(0);
 
                 }
@@ -222,10 +220,11 @@ public class bSim extends GraphicsProgram implements ItemListener {
         add(rect);
         myTree.root = null;
     }
-//    public void stop() {
-//    }
-//    public void quit() {
-//    }
+
+    public void stop() {
+        myTree.stopBalls();
+    }
+
     public void run() {
         while(true) {
             pause(200);

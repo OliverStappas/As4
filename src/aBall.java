@@ -51,7 +51,7 @@ public class aBall extends Thread  {
                   double bSize, Color bColor, double bLoss, bSim link) {
         // Get simulation parameters
         this.Xi = Xi; //***
-        this.Yi = Yi; //***
+        this.Yi = Yi + bSize; //***
         this.Vo = Vo; //***
         this.theta = theta; //***
         this.bSize = bSize; //***
