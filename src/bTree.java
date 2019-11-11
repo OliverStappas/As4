@@ -1,4 +1,4 @@
-// Comments with *** in front them are taken from the ECSE 202 Assignment 1, 2 and 3 Instructions
+// Comments with *** in front them are taken from the ECSE 202 Assignment 1, 2, 3 and 4 Instructions
 
 /**
  *  A binary tree class that processes balls with respect to their sizes
@@ -147,7 +147,7 @@ public class bTree {
     }
 
     /**
-     * Method that
+     * Method that traverses the ball tree and stops all the balls
      * @param root Ball node in the bTree
      */
     private void stopBallsTraversal(bNode root) {
@@ -161,6 +161,9 @@ public class bTree {
         }
     }
 
+    /**
+     * Method that stops all the balls in the tree without needing a parameter
+     */
     public void stopBalls() {
         stopBallsTraversal(root);
     }

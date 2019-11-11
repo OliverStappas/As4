@@ -1,4 +1,4 @@
-// Comments with *** in front them are taken from the ECSE 202 Assignment 1, 2 and 3 Instructions
+// Comments with *** in front them are taken from the ECSE 202 Assignment 1, 2, 3 and 4 Instructions
 
 import acm.graphics.GOval;
 import java.awt.*;
@@ -10,13 +10,10 @@ import java.awt.*;
 
 public class aBall extends Thread  {
 
-    private static final int WIDTH = 1200; // n.b. screen coordinates
     private static final int HEIGHT = 600; //***
-    private static final int OFFSET = 200; //***
     private static final double SCALE = HEIGHT/100;    // pixels per meter  //***
     private static final double g = 9.8;               // MKS gravitational constant 9.8 m/s^2 //***
     private static final double Pi = 3.141592654;      // To convert degrees to radians //***
-    //private static final double k = 0.0001;            // Air resistance parameter //***
     private static final double k = 0.0001;           // Air resistance parameter for red ball test //***
     private static final double ETHR = 0.01;           // Energy threshold //***
     private static final double PD = 1;                // Trace point diameter //***
@@ -32,8 +29,6 @@ public class aBall extends Thread  {
     private GOval myBall;
     private bSim link;
     private volatile boolean running = true; // Condition for program to be running
-    private bTree traceTree = new bTree();
-
 
     /**
      *
@@ -200,9 +195,8 @@ public class aBall extends Thread  {
             time += TICK;
 
             // Animation delay
-
             try { // pause for 50 milliseconds  //***
-                Thread.sleep(50);            //*** s
+                Thread.sleep(50);            //***
             } catch (InterruptedException e) {  //***
                 e.printStackTrace();            //***
             }
