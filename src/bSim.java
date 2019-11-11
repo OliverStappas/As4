@@ -50,6 +50,11 @@ public class bSim extends GraphicsProgram implements ItemListener {
     // Creating the floor
     GRect rect = new GRect(0, HEIGHT, 1200, 3);
 
+    GLabel label1 = new GLabel("Simulation in progress", WIDTH - 250, 50); // Message on screen
+
+    private boolean stackCondition = false; // Whether or not the balls have been stacked
+
+
     /**
      * Running the ball and screen simulation
      */
@@ -187,6 +192,13 @@ public class bSim extends GraphicsProgram implements ItemListener {
      */
     public void doSim() {
 
+        stackCondition = false; // All balls are not stacked
+
+        label1.setLabel("Simulation in progress");
+        label1.setFont("SansSerif-24");
+        label1.setColor(Color.RED);
+        add(label1);
+
         // Getting the values of the different entry fields
         int numBalls = numballsField.getValue();
         double minSize = minSizeField.getValue();
@@ -214,27 +226,19 @@ public class bSim extends GraphicsProgram implements ItemListener {
             iBall.start(); // Starting the ball simulation
 
         }
-//        if (!myTree.isRunning()) {
-//            GLabel label1 = new GLabel("Simulation completed", WIDTH / 2, HEIGHT / 2); // Message to click to stack balls
-//            label1.setFont("SansSerif-24");
-//            label1.setColor(Color.RED);
-//            add(label1);
-//            //label1.setVisible(false); // Making the first message invisible (found from looking through Glabel methods)
-//        }
-
     }
 
     /**
      * Stacks all the balls on the screen if they have all stopped moving
      */
     public void doStack() {
-        if(!myTree.isRunning()) // Only stack if none of the balls are running
-        myTree.stackBalls(); //*** Lay out balls in order
-//        GLabel label2 = new GLabel("All Stacked!", WIDTH/2, HEIGHT/2); // Message that balls are stacked
-//        label2.setFont("SansSerif-36");
-//        label2.setColor(Color.RED);
-//        add(label2);
-//
+        if(!myTree.isRunning()) { // Only stack if none of the balls are running
+            myTree.stackBalls(); //*** Lay out balls in order
+
+            // Message that balls are stacked
+            stackCondition = true;
+
+        }
     }
 
     /**
@@ -252,6 +256,7 @@ public class bSim extends GraphicsProgram implements ItemListener {
     }
 
     public void stop() {
+        stackCondition = false; // All balls are not stacked
         myTree.stopBalls(); // Stop the simulation
     }
 
@@ -266,6 +271,25 @@ public class bSim extends GraphicsProgram implements ItemListener {
                 doSim(); // Do the ball simulation
                 bSimC.setSelectedIndex(0); // Go back to the first button
                 simEnable = false; // Don't run anymore
+
+
+            }
+
+            // Message that the simulation is completed
+            if (myTree.root != null) { // If there are balls in a tree
+                if (!myTree.isRunning()) { // Once the simulation is done running
+                    label1.setLabel("Simulation completed");
+                    label1.setFont("SansSerif-24");
+                    label1.setColor(Color.RED);
+
+                    // If the balls have been stacked
+                    if (stackCondition){
+                        label1.setLabel("All stacked!");
+                    }
+
+                    add(label1); // Adding the message that either the simulation is completed or that all the balls are stacked
+
+                 }
             }
         }
     }
